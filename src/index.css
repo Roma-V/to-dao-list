@@ -1,6 +1,10 @@
+:root {
+  --primary-color: rgb(195, 222, 253);
+}
+
 /* Root styles */
 html, body, #root {
-  min-height: 100vw;
+  min-height: 100vh;
 }
 
 #root {
@@ -18,16 +22,19 @@ html, body, #root {
 header {
   margin-bottom: 2em;
   padding: 1em;
-  background-color: rgb(195, 222, 253);
+  background: radial-gradient(closest-side, var(--primary-color) 30%, rgba(195, 222, 253, 0) 80%);
+  /* background-color: rgb(195, 222, 253); */
 }
 
 main {
   flex-grow: 1;
+  max-width: 600px;
 }
 
 footer {
   text-align: center;
-  box-shadow: 0 0 5px rgb(195, 222, 253);
+  box-shadow: 0 0 5px var(--primary-color);
+  padding: 0.5em;
 }
 
 /* Specific element */
@@ -41,10 +48,26 @@ h1 {
   width: 50vw;
   margin-right: 1em;
 }
+.ui.input > input:focus {
+  box-shadow: 0 0 5px var(--primary-color);
+}
+
+.contained-row {
+  margin: 0;
+}
+
+/* Filter container */
+.filter-container {
+  font-size: 1.5em;
+  margin-top: 1em;
+  padding: 0.5em;
+  text-align: center;
+}
 
 ul.ui.list {
   list-style: none;
   margin-left: 0;
+  margin-top: 0;
 }
 
 li::before {
@@ -57,6 +80,9 @@ li::before {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+.ui.segment:hover, .ui.segment:active {
+  box-shadow: 0 0 10px var(--primary-color);
 }
 
 .content {

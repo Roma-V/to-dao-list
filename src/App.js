@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Header } from 'semantic-ui-react'
+import { v4 as uuid } from 'uuid';
 
 import AddItemForm from './Components/AddItemForm'
 import TodoList from './Components/TodoList'
@@ -13,18 +14,26 @@ let todosInitial = [
 function App() {
   const [todos, setTodos] = useState(todosInitial);
 
-  function addTodoItemHandler(event)  {
-    event.preventDefault();
-    const description = event.target[0].value;
-    console.log('added in item:', description);
-
-
+  function addTodoItemHandler(description)  {
     setTodos(todos.concat({
-      id: Math.floor(1000 * Math.random()),
+      id: uuid(),
       description,
       active: true,
     }))
   }
+
+  function itemToggleActiveHandler(id) {
+    return function(event) {
+      setTodos(todos.map(todo => todo.id === id ? { ...todo, active: !todo.active } : todo));
+    }
+  }
+
+  function itemDeleteHandler(id) {
+    return function(event) {
+      setTodos(todos.filter(todo => todo.id !== id));
+    }
+  }
+
   return (
     <>
       <header>
@@ -32,7 +41,10 @@ function App() {
       </header>
       <main>
         <AddItemForm onSubmit={addTodoItemHandler} />
-        <TodoList todoList={todos} />
+        <TodoList
+          todoList={todos}
+          onToggleAactive={itemToggleActiveHandler}
+          onDelete={itemDeleteHandler} />
       </main>
       <footer>
         Created by Roman Vasilyev
