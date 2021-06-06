@@ -12,6 +12,9 @@ This little app represents a list of to do tasks. The following functionality is
 # Tech stack
 The project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 Even though `npm audit` shows numerous vulnerabilities, the vulnerable packages (`browserslist`, `postcss`) are updated manually and no open issues exist.
+`React` defines page structure.
+`Redux` handles app state. 
+`Semantin UI` defines style for components. Note that some additional styling is applied through CSS as well.
 
 ## Prerequisites for development
 Install Node 14.0 or later.
@@ -40,5 +43,5 @@ A docker file is configured to serve se project from a container. The project op
 Build a Docker image:\
 `docker build . -t <image-name>`
 
-Run the container on port 5000:\
+Run the container bound to port 5000:\
 `docker run -d -p 5000:5000 <image-name>`

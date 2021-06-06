@@ -1,7 +1,16 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import { Breadcrumb } from 'semantic-ui-react'
 
-function Filter({ filter, onFilterChange, options, counts }) {
+import { countAllTasks, countActiveTasks, countCompleteTasks } from '../store/taskReducer'
+
+function Filter({ filter, onFilterChange, options }) {
+    const counts = [
+        useSelector(countAllTasks),
+        useSelector(countActiveTasks),
+        useSelector(countCompleteTasks),
+    ]
+
     function changeFilter(option) {
         return function (event) {
             onFilterChange(option);

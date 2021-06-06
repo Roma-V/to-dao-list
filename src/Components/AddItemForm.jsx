@@ -1,9 +1,14 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Input, Button, Label } from 'semantic-ui-react'
+import { v4 as uuid } from 'uuid';
+
+import { add } from '../store/taskReducer'
 
 const MAX_SYMBOLS = 20;
 
-function AddItemForm({ onSubmit }) {
+function AddItemForm() {
+    const dispatch = useDispatch();
     const [input, setInput] = useState('');
     const [error, setError] = useState(false);
 
@@ -20,7 +25,13 @@ function AddItemForm({ onSubmit }) {
     function handleSubmit(event) {
         event.preventDefault();
         if (!error) {
-            onSubmit(input);
+            const newTask = {
+              id: uuid(),
+              description: input,
+              active: true,
+            };
+        
+            dispatch(add(newTask));
             setInput('');
         }
     }

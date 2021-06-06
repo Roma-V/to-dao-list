@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { List } from 'semantic-ui-react'
 
 import Filter from './Filter'
 import ListItem from './ListItem'
+import { selectAllTasks, remove, toggleActive } from '../store/taskReducer'
 
 const filterFunctions = {
     all: () => true,
@@ -12,14 +14,10 @@ const filterFunctions = {
 
 const filterOptions = Object.keys(filterFunctions);
 
-const filterCounts = {
-    all: (sum, todo) => sum + 1,
-    active: (sum, todo) => sum + (todo.active ? 1 : 0),
-    done: (sum, todo) => sum + (!todo.active ? 1 : 0),
-};
-
-function TodoList({ todoList, onToggleAactive, onDelete }) {
+function TodoList() {
+    const dispatch = useDispatch();
     const [filter, setFilter] = useState('all');
+    const tasks = useSelector(selectAllTasks).filter(filterFunctions[filter]);
 
     function filterHandler(option) {
         setFilter(option);
@@ -30,19 +28,17 @@ function TodoList({ todoList, onToggleAactive, onDelete }) {
             <Filter 
                 filter={filter} 
                 onFilterChange={filterHandler} 
-                options={filterOptions} 
-                counts={filterOptions.map(option => todoList.reduce(filterCounts[option], 0))}
+                options={filterOptions}
             />
             <List as='ul' size='large'>
                 {
-                    todoList.filter(filterFunctions[filter])
-                        .map(todo => (
+                    tasks.map(todo => (
                         <ListItem
                             key={todo.id}
                             description={todo.description}
                             active={todo.active}
-                            onToggleActive={onToggleAactive(todo.id)}
-                            onDelete={onDelete(todo.id)}
+                            onToggleActive={() => dispatch(toggleActive(todo.id))}
+                            onDelete={() => dispatch(remove(todo.id))}
                         />
                     ))
                 }
