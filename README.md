@@ -1,5 +1,3 @@
-# Getting Started with Create React App
-
 # Overview
 This little app represents a list of to do tasks. The following functionality is implemented:
 - add a new tasks; maximum input length is restricted to 20 symbols - validation is performed on input change and upon violation of the limit submit does not happen;
