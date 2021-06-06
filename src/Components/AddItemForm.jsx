@@ -19,7 +19,10 @@ function AddItemForm({ onSubmit }) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        if (!error) onSubmit(input);
+        if (!error) {
+            onSubmit(input);
+            setInput('');
+        }
     }
 
     return (
@@ -28,7 +31,7 @@ function AddItemForm({ onSubmit }) {
                 <Input
                     error={error}
                     value={input}
-                    placeholder='Add an action...' 
+                    placeholder='Add a task...' 
                     onChange={validate}
                 />
                 <Button
